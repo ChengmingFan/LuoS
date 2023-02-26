@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LuoS</string>
+    <string name="app_version_str" translatable="false">1.1.0</string>
 </resources>

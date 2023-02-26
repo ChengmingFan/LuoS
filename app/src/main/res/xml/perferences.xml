@@ -27,7 +27,7 @@
         <Preference
                 android:title="当前版本"
                 android:key="preference_version"
-                android:summary="@string/app_version"
+                android:summary="@string/app_version_str"
                 >
         </Preference>
         <Preference
