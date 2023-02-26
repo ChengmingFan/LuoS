@@ -1,6 +1,6 @@
 package com.fan.soulkiller;
 
-import android.content.SharedPreferences;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
         MySettingsFragment mySettingsFragment = new MySettingsFragment();
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -20,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
                     .replace(android.R.id.content, mySettingsFragment)
                     .commit();
         }
-        SharedPreferences sharedPreferences = getSharedPreferences(getPackageName() + "_preferences", MODE_PRIVATE);
+        getSharedPreferences("com.fan.soulkiller_preferences", Context.MODE_WORLD_READABLE);
     }
 }

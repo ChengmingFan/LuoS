@@ -2,13 +2,10 @@ package com.fan.soulkiller.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 
 /**
@@ -18,17 +15,11 @@ public class Helper {
     @SuppressLint("StaticFieldLeak")
     public static Context context;
     public static PackageInfo packageInfo;
-    public static SharedPreferences prefs;
+    public static XSharedPreferences prefs;
 
     public static boolean init(ClassLoader classLoader) {
         try {
-            prefs = context.getSharedPreferences("com.fan.soulkiller_preferences", Context.MODE_PRIVATE);
-            if (prefs == null) {
-                Log.d("LuoS", "123");
-            } else {
-                Log.d("LuoS", "123");
-            }
-            packageInfo = context.getPackageManager().getPackageInfo("com.zhihu.android", 0);
+            packageInfo = context.getPackageManager().getPackageInfo("cn.soulapp.android", 0);
             return true;
         } catch (Exception e) {
             XposedBridge.log("[SoulKiller] " + e);
