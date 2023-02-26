@@ -16,10 +16,52 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    if (project.hasProperty('releaseStoreFile')) {
+        signingConfigs {
+            config {
+                storeFile = file(project.properties['releaseStoreFile'])
+                storePassword = project.properties['releaseStorePassword']
+                keyAlias = project.properties['releaseKeyAlias']
+                keyPassword = project.properties['releaseKeyPassword']
+            }
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.resValue "string", "app_version", variant.versionName
+        variant.outputs.all { output ->
+            if (variant.buildType.name == 'release') {
+                outputFileName = "LuoS_${defaultConfig.versionName}.apk"
+            }
+        }
+    }
+
     buildTypes {
+        all {
+            if (project.hasProperty('releaseStoreFile')) {
+                signingConfig signingConfigs.config
+            } else {
+                println("using debug sign")
+                signingConfig signingConfigs.debug
+            }
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            externalNativeBuild {
+                cmake {
+                    cppFlags "-flto", "-ffunction-sections", "-fdata-sections", "-Wl,--gc-sections", "-fno-unwind-tables", "-fno-asynchronous-unwind-tables", "-Wl,--exclude-libs,ALL"
+                    cFlags "-flto", "-ffunction-sections", "-fdata-sections", "-Wl,--gc-sections", "-fno-unwind-tables", "-fno-asynchronous-unwind-tables", "-Wl,--exclude-libs,ALL"
+                    arguments "-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_CXX_FLAGS_RELEASE=-Oz -DNDEBUG", "-DCMAKE_C_FLAGS_RELEASE=-Oz -DNDEBUG"
+                }
+            }
+        }
+        debug {
+            externalNativeBuild {
+                cmake {
+                    arguments "-DCMAKE_CXX_FLAGS_DEBUG=-Og", "-DCMAKE_C_FLAGS_DEBUG=-Og"
+                }
+            }
         }
     }
     compileOptions {
