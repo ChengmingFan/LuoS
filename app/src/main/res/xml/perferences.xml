@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+            android:title="免责声明"
+            android:key="category_eula">
+        <SwitchPreferenceCompat
+                android:summary="本软件仅用于技术交流, 请勿用于商业及非法用途，如产生法律纠纷与本人无关。&#x000A;&#x000A;本软件不会收集、上传您的个人信息，如有个人信息泄露与本人无关。"
+                android:defaultValue="false"
+                android:key="accept_eula"
+                android:title="同意" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="设置">
+        <SwitchPreferenceCompat
+                android:dependency="accept_eula"
+                android:summary="语音匹配直接查看对方身份"
+                android:defaultValue="false"
+                android:key="switch_voice"
+                android:title="语音匹配" />
+        <SwitchPreferenceCompat
+                android:dependency="accept_eula"
+                android:summary="视频匹配消除马赛克(实验性功能)"
+                android:defaultValue="false"
+                android:key="switch_video"
+                android:title="视频匹配" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="关于">
+        <Preference
+                android:title="当前版本"
+                android:key="preference_version"
+                android:summary="@string/app_version"
+                >
+        </Preference>
+        <Preference
+                android:key="preference_sourcecode"
+                android:title="源代码"
+                android:summary="点个Star吧"/>
+    </PreferenceCategory>
+</PreferenceScreen>

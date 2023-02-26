@@ -2,6 +2,7 @@ package com.fan.soulkiller.hooks;
 
 import android.util.Log;
 
+import com.fan.soulkiller.utils.Helper;
 import com.google.gson.Gson;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -25,7 +26,6 @@ public class VideoHook implements IHook {
 
     @Override
     public void init(ClassLoader classLoader) throws Throwable {
-        XposedBridge.log("======soul助手(视频模块)开始工作了======");
         videoMatchControllerClazz = classLoader.loadClass("cn.soulapp.android.component.planet.videomatch.VideoMatchController");
         videoMatchResultClazz = classLoader.loadClass("cn.soulapp.android.component.planet.videomatch.api.bean.VideoMatchResult");
         callbackClazz = classLoader.loadClass("cn.soulapp.android.component.planet.videomatch.VideoMatchController$i");
@@ -33,20 +33,23 @@ public class VideoHook implements IHook {
 
     @Override
     public void hook() throws Throwable {
-        XposedHelpers.findAndHookMethod(videoMatchControllerClazz, "O", videoMatchResultClazz, boolean.class, new XC_MethodHook() {
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                Log.d(TAG, "视频匹配成功，尝试消除马赛克");
-                Object videoMatchController = XposedHelpers.callStaticMethod(videoMatchControllerClazz, "I");
-                XposedHelpers.callMethod(videoMatchController, "k");
-            }
-        });
+        if (Helper.prefs.getBoolean("switch_video", true)){
+            XposedBridge.log("======soul助手(视频模块)开始工作了======");
+            XposedHelpers.findAndHookMethod(videoMatchControllerClazz, "O", videoMatchResultClazz, boolean.class, new XC_MethodHook() {
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    Log.d(TAG, "视频匹配成功，尝试消除马赛克");
+                    Object videoMatchController = XposedHelpers.callStaticMethod(videoMatchControllerClazz, "I");
+                    XposedHelpers.callMethod(videoMatchController, "k");
+                }
+            });
 
-        XposedHelpers.findAndHookMethod(callbackClazz, "a", videoMatchResultClazz, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                Log.d(TAG, "正在视频匹配。。。。。。");
-            }
-        });
+            XposedHelpers.findAndHookMethod(callbackClazz, "a", videoMatchResultClazz, new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    Log.d(TAG, "正在视频匹配。。。。。。");
+                }
+            });
+        }
     }
 }
