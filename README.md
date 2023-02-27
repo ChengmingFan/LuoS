@@ -13,7 +13,7 @@ Soul App增强助手
 [Github Release](https://github.com/ChengmingFan/LuoS/releases)
 
 ## 鸣谢
-[Xposed](https://github.com/rovo89/Xposed)
-[icon kitchen](https://icon.kitchen/)
-[Zhiliao](https://github.com/shatyuka/Zhiliao)
+[Xposed](https://github.com/rovo89/Xposed)  
+[icon kitchen](https://icon.kitchen/)  
+[Zhiliao](https://github.com/shatyuka/Zhiliao)  
  
