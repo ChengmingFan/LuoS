@@ -31,10 +31,16 @@ jobs:
             echo ${{ secrets.KEY_STORE }} | base64 --decode > key.jks
           fi
       - name: Build with Gradle
-        run: bash ./gradlew -PappVerName=${{ env.VERSION }} assembleRelease
+        run: bash ./gradlew -P appVerName=${{ env.VERSION }} assembleRelease
       - name: Upload built apk
         if: success()
         uses: actions/upload-artifact@v2
         with:
           name: LuoS_${{ env.VERSION }}
           path: ${{ github.workspace }}/app/build/outputs/apk/release
+
+  skipped:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.event.head_commit.message, '[skip ci]') }}
+    steps:
+      - uses: actions/checkout@v2
