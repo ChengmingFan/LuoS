@@ -12,7 +12,8 @@ import de.robv.android.xposed.XposedBridge;
 public class Hooks {
     static final IHook[] defaultHooks = {
             new VoiceHook(),
-            new VideoHook()
+            new VideoHook(),
+            new AdHook()
     };
 
     public static void init(final ClassLoader classLoader) {
