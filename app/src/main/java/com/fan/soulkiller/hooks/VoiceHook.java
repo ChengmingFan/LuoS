@@ -1,10 +1,7 @@
 package com.fan.soulkiller.hooks;
 
-import static de.robv.android.xposed.callbacks.XC_LoadPackage.*;
-
 import com.fan.soulkiller.utils.Helper;
 
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
@@ -31,7 +28,7 @@ public class VoiceHook implements IHook {
 
     @Override
     public void hook() throws Throwable {
-        if (Helper.prefs.getBoolean("switch_voice", true)) {
+        if (Helper.prefs.getBoolean("switch_voice", false)) {
             XposedBridge.log("======soul助手(语音模块)开始工作了======");
             XposedHelpers.findAndHookMethod(managerClazz, "y", matchResultClazz, int.class, new XC_MethodHook() {
                 @Override

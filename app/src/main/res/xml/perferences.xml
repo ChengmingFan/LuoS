@@ -22,6 +22,12 @@
                 android:defaultValue="false"
                 android:key="switch_video"
                 android:title="视频匹配" />
+        <SwitchPreferenceCompat
+                android:dependency="accept_eula"
+                android:summary="去除启动页, 广场, 瞬间评论区的广告"
+                android:defaultValue="false"
+                android:key="switch_ad"
+                android:title="去广告" />
     </PreferenceCategory>
     <PreferenceCategory android:title="关于">
         <Preference

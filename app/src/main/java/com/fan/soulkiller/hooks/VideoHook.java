@@ -33,7 +33,7 @@ public class VideoHook implements IHook {
 
     @Override
     public void hook() throws Throwable {
-        if (Helper.prefs.getBoolean("switch_video", true)){
+        if (Helper.prefs.getBoolean("switch_video", false)){
             XposedBridge.log("======soul助手(视频模块)开始工作了======");
             XposedHelpers.findAndHookMethod(videoMatchControllerClazz, "O", videoMatchResultClazz, boolean.class, new XC_MethodHook() {
                 @Override
