@@ -13,7 +13,8 @@ public class Hooks {
     static final IHook[] defaultHooks = {
             new VoiceHook(),
             new VideoHook(),
-            new AdHook()
+            new SplashAdHook(),
+            new SquareAdHook()
     };
 
     public static void init(final ClassLoader classLoader) {

@@ -12,8 +12,10 @@ import de.robv.android.xposed.XposedHelpers;
 /**
  * Created by Chengming Fan on 2023/2/27 11:16 PM
  */
-public class AdHook implements IHook{
+public class SplashAdHook implements IHook{
     Class<?> MainScheduler$onCreate$6Clazz;
+    Class<?> MainActivityClazz;
+
     @Override
     public String getName() {
         return "去广告";
@@ -22,6 +24,7 @@ public class AdHook implements IHook{
     @Override
     public void init(ClassLoader classLoader) throws Throwable {
         MainScheduler$onCreate$6Clazz = classLoader.loadClass("cn.soulapp.android.component.startup.main.MainScheduler$onCreate$6");
+        MainActivityClazz = classLoader.loadClass("cn.soulapp.android.component.startup.main.MainActivity");
     }
 
     @Override
@@ -37,12 +40,18 @@ public class AdHook implements IHook{
                 Field mainSchedulerField = MainScheduler$onCreate$6Clazz.getDeclaredField("this$0");
                 mainSchedulerField.setAccessible(true);
                 Object mainScheduler = mainSchedulerField.get(param.thisObject);
-                if (mainScheduler != null) {
-                    Log.d(TAG, "beforeHookedMethod: 1");
-                } else{
-                    Log.d(TAG, "beforeHookedMethod: 2");
-                }
                 param.setResult(null);
+                XposedHelpers.callMethod(mainScheduler, "q");
+            }
+        });
+
+        XposedHelpers.findAndHookMethod(MainActivityClazz, "onRestart", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                Field bField = MainActivityClazz.getDeclaredField("b");
+                bField.setAccessible(true);
+                Object mainScheduler = bField.get(param.thisObject);
                 XposedHelpers.callMethod(mainScheduler, "q");
             }
         });
