@@ -14,7 +14,8 @@ public class Hooks {
             new VoiceHook(),
             new VideoHook(),
             new SplashAdHook(),
-            new SquareAdHook()
+            new SquareAdHook(),
+            new CommentAdHook()
     };
 
     public static void init(final ClassLoader classLoader) {

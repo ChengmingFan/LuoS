@@ -45,14 +45,15 @@ public class SplashAdHook implements IHook{
             }
         });
 
+        // 移除切屏时的广告 暂时未实现
         XposedHelpers.findAndHookMethod(MainActivityClazz, "onRestart", new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 super.afterHookedMethod(param);
-                Field bField = MainActivityClazz.getDeclaredField("b");
-                bField.setAccessible(true);
-                Object mainScheduler = bField.get(param.thisObject);
-                XposedHelpers.callMethod(mainScheduler, "q");
+//                Field bField = MainActivityClazz.getDeclaredField("b");
+//                bField.setAccessible(true);
+//                Object mainScheduler = bField.get(param.thisObject);
+//                XposedHelpers.callMethod(mainScheduler, "q");
             }
         });
 
