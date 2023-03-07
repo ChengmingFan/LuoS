@@ -74,6 +74,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     compileOnly 'de.robv.android.xposed:api:82'
 
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'androidx.appcompat:appcompat:1.4.1'
