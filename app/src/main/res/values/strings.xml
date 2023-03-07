@@ -2,4 +2,5 @@
     <string name="app_name">LuoS</string>
     <string name="app_version_str" translatable="false">1.1.0</string>
     <string name="latest_version" translatable="false">https://api.github.com/repos/ChengmingFan/LuoS/releases/latest</string>
+    <string name="want_start" translatable="false">点个star吧, 帮助作者找工作时更好地吹牛</string>
 </resources>

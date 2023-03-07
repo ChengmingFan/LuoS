@@ -39,6 +39,6 @@
         <Preference
                 android:key="preference_sourcecode"
                 android:title="源代码"
-                android:summary="点个Star吧"/>
+                android:summary="@string/want_start"/>
     </PreferenceCategory>
 </PreferenceScreen>
