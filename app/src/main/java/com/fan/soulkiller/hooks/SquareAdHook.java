@@ -2,7 +2,8 @@ package com.fan.soulkiller.hooks;
 
 import android.util.Log;
 
-import java.lang.reflect.Field;
+import com.fan.soulkiller.utils.Helper;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,12 @@ public class SquareAdHook implements IHook{
     Class<?> StagePublisherClazz;
     Class<?> SplashAdManagerClazz;
     Class<?> HotAdManagerClazz;
+    private Class<?> adProPostProviderClazz;
+    private Class<?> adPostViewHolder;
+    private Class<?> soulUnifiedAdClazz;
+    private Class<?> cSqItemSquareAdPostV2BindingClazz;
+    private Class<?> cSqItemSquareAdPostV3BindingClazz;
+
     @Override
     public String getName() {
         return "广场广告";
@@ -43,53 +50,35 @@ public class SquareAdHook implements IHook{
         StagePublisherClazz = classLoader.loadClass("cn.soulapp.android.component.startup.utils.j0");
         SplashAdManagerClazz = classLoader.loadClass("u5.e");
         HotAdManagerClazz = classLoader.loadClass("u5.c");
+        adProPostProviderClazz= classLoader.loadClass("cn.soulapp.android.component.square.main.ad.u");
+        adPostViewHolder = classLoader.loadClass("cn.soulapp.android.component.square.main.ad.AdPostViewHolder");
+        soulUnifiedAdClazz = classLoader.loadClass("q3.a");
+        cSqItemSquareAdPostV2BindingClazz = classLoader.loadClass("cn.soulapp.android.component.square.databinding.CSqItemSquareAdPostV2Binding");
+        cSqItemSquareAdPostV3BindingClazz = classLoader.loadClass("cn.soulapp.android.component.square.databinding.CSqItemSquareAdPostV3Binding");
     }
 
     @Override
     public void hook() throws Throwable {
-        XposedHelpers.findAndHookMethod(MainActivityClazz, "doHeavenRunning", new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-//                super.beforeHookedMethod(param);
-//                Object mainActivity = param.thisObject;
-//                Field cField = MainActivityClazz.getDeclaredField("c");
-//                cField.setAccessible(true);
-//                Object adViewProvider = cField.get(mainActivity);
-//                Field jField = AdViewProviderClazz.getDeclaredField("j");
-//                jField.setAccessible(true);
-//                jField.set(adViewProvider, false);
-//                param.setResult(null);
-            }
-
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                Field cField = MainActivityClazz.getDeclaredField("c");
-                cField.setAccessible(true);
-                Object adV = cField.get(param.thisObject);
-            }
-        });
-
+        if (!Helper.prefs.getBoolean("switch_ad", false)) {
+            return;
+        }
         XposedHelpers.findAndHookMethod(HeavenFragmentClazz, "onCreateView", LayoutInflaterClazz, ViewGroupClazz, BundleClazz, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 Object obj = XposedHelpers.callStaticMethod(StagePublisherClazz, "b");
+                Log.d(TAG, "beforeHookedMethod: onCreateView: " + obj.toString());
                 List<Integer> result = new ArrayList<>();
                 if (obj instanceof ArrayList<?>) {
                     for (Object o : (List<?>) obj) {
                         result.add((Integer) o);
+                        Log.d(TAG, "beforeHookedMethod: onCreateView: " + (Integer) o);
                     }
                 }
                 Object splashAdManager = XposedHelpers.callStaticMethod(SplashAdManagerClazz, "f");
                 Method kMethod = SplashAdManagerClazz.getDeclaredMethod("k");
                 kMethod.setAccessible(true);
                 Object res = kMethod.invoke(splashAdManager);
-            }
-        });
-
-        XposedHelpers.findAndHookMethod(AdViewProvider$bClazz, "onAdShow", ViewClazz, new XC_MethodHook() {
-            @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                Log.d(TAG, "beforeHookedMethod: oonAdShow");
+                Log.d(TAG, "beforeHookedMethod: onCreateView: " + res);
             }
         });
 
@@ -97,6 +86,20 @@ public class SquareAdHook implements IHook{
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 super.beforeHookedMethod(param);
+                param.setResult(null);
+            }
+        });
+
+        XposedHelpers.findAndHookMethod(adProPostProviderClazz, "d", LayoutInflaterClazz, ViewGroupClazz, new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                param.setResult(null);
+            }
+        });
+
+        XposedHelpers.findAndHookMethod(cSqItemSquareAdPostV2BindingClazz, "bind", ViewClazz, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 param.setResult(null);
             }
         });

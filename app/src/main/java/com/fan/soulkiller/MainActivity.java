@@ -1,5 +1,6 @@
 package com.fan.soulkiller;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                     .replace(android.R.id.content, mySettingsFragment)
                     .commit();
         }
-//        getSharedPreferences("com.fan.soulkiller_preferences", Context.MODE_WORLD_READABLE);
+        getSharedPreferences("com.fan.soulkiller_preferences", Context.MODE_WORLD_READABLE);
         assembleLatestVersion(mySettingsFragment);
     }
 
