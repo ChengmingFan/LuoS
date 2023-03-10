@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
             try (Response response = okHttpClient.newCall(request).execute()) {
                 LatestReleaseResponse latestReleaseResponse = new Gson().fromJson(response.body().string(), LatestReleaseResponse.class);
                 String name = latestReleaseResponse.getName();
+                if (name == null) {
+                    return;
+                }
                 String latestVersion = name.split(" ")[1].substring(1);
                 new Handler(Looper.getMainLooper()).post(() -> {
                     Preference preferenceVersion = mySettingsFragment.findPreference("preference_version");

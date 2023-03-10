@@ -40,5 +40,9 @@
                 android:key="preference_sourcecode"
                 android:title="源代码"
                 android:summary="@string/want_start"/>
+        <Preference
+            android:key="preference_donate"
+            android:title="捐赠作者"
+            android:summary="@string/want_donate"/>
     </PreferenceCategory>
 </PreferenceScreen>

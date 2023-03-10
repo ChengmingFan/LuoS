@@ -26,5 +26,12 @@ public class MySettingsFragment extends PreferenceFragmentCompat {
             startActivity(intent_sourcecode);
             return false;
         });
+        Preference preferenceDonate = this.getPreferenceScreen().findPreference("preference_donate");
+        Objects.requireNonNull(preferenceDonate).setOnPreferenceClickListener(it -> {
+            Intent intent = new Intent("donate_action");
+            intent.addCategory("donate_category");
+            startActivity(intent);
+            return false;
+        });
     }
 }
