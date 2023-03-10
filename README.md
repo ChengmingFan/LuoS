@@ -3,11 +3,17 @@ Soul App增强助手
 
 ## 功能
 - 语音匹配直接查看对面身份
-
-## 待实现
 - 去开屏广告
 - 去广场广告
-- 蒙面酒馆直接查看身份
+- 去瞬间评论区广告
+
+## 使用说明
+1. 下载安装本模块
+2. 在LSPosed中激活本模块
+3. 打开本模块进行设置
+4. 重启Soul App
+5. Enjoy
+
 
 ## 下载
 [Github Release](https://github.com/ChengmingFan/LuoS/releases)
