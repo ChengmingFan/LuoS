@@ -31,7 +31,7 @@ jobs:
             echo ${{ secrets.KEY_STORE }} | base64 --decode > key.jks
           fi
       - name: Build with Gradle
-        run: bash ./gradlew -PappVerName=${{ env.VERSION }} assembleRelease
+        run: bash ./gradlew assembleRelease
       - name: Upload built apk
         if: success()
         uses: actions/upload-artifact@v2
