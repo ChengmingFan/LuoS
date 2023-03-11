@@ -32,7 +32,11 @@ public class MainActivity extends AppCompatActivity {
                     .replace(android.R.id.content, mySettingsFragment)
                     .commit();
         }
-        getSharedPreferences("com.fan.soulkiller_preferences", Context.MODE_WORLD_READABLE);
+        try {
+            getSharedPreferences("com.fan.soulkiller_preferences", Context.MODE_WORLD_READABLE);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
         assembleLatestVersion(mySettingsFragment);
     }
 
