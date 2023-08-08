@@ -15,7 +15,8 @@ public class Hooks {
             new VideoHook(),
             new SplashAdHook(),
             new SquareAdHook(),
-            new CommentAdHook()
+            new CommentAdHook(),
+            new ChatHook()
     };
 
     public static void init(final ClassLoader classLoader) {
@@ -25,7 +26,7 @@ public class Hooks {
                 hook.hook();
             } catch (Throwable e) {
                 Helper.toast(hook.getName() + "功能加载失败，可能不支持当前版本Soul: " + Helper.packageInfo.versionName, Toast.LENGTH_LONG);
-                XposedBridge.log("[SoulKiller] " + e.toString());
+                XposedBridge.log("[SoulKiller] " + e);
             }
         }
     }
