@@ -25,7 +25,7 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
     private Button alipayBtn;
     private Button wechatPayBtn;
 
-    private final static String ALIPAY_LINK = "https://qr.alipay.com/17o17940hsgauvnmins9h4c";
+    private final static String ALIPAY_LINK = "https://qr.alipay.com";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -73,7 +73,6 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
         dialog.setContentView(R.layout.dialog_layout);
         dialog.setCanceledOnTouchOutside(true);
         ImageView imageView = dialog.findViewById(R.id.wechatPayImage);
-        imageView.setImageResource(R.drawable.wechat_pay);
         imageView.setOnClickListener(it-> dialog.cancel());
         dialog.show();
     }
