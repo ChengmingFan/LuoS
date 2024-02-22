@@ -1,5 +1,10 @@
 package com.fan.soulkiller.hooks;
 
+import android.widget.TextView;
+
+import java.lang.reflect.Field;
+import java.util.List;
+
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
@@ -20,7 +25,7 @@ public class ChatHook implements IHook {
     }
 
     @Override
-    public void hook() {
+    public void hook() throws ClassNotFoundException {
 
         XposedHelpers.findAndHookMethod("cn.soulapp.android.lib.common.bean.ChatLimitModel", classLoader, "isLimit", new XC_MethodHook() {
             @Override
@@ -34,5 +39,53 @@ public class ChatHook implements IHook {
                 param.setResult(false);
             }
         });
+
+
+//        XposedHelpers.findAndHookMethod("cn.soulapp.android.component.chat.widget.PromptText",
+//                classLoader,
+//                "i",
+//                classLoader.loadClass("cn.soulapp.imlib.msg.ImMessage"),
+//                classLoader.loadClass("cn.soulapp.android.component.chat.widget.PromptText$a"),
+//                new XC_MethodHook() {
+//            @Override
+//            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+//                super.beforeHookedMethod(param);
+//            }
+//            @Override
+//            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                super.afterHookedMethod(param);
+//            }
+//        });
+
+
+        XposedHelpers.findAndHookMethod("cn.soulapp.imlib.msg.chat.ChatMessage", classLoader, "i", new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                super.beforeHookedMethod(param);
+            }
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                super.afterHookedMethod(param);
+                if (param.getResult().equals(9)) {
+                    param.setResult(1);
+                }
+            }
+        });
+
+//        XposedHelpers.findAndHookMethod("cn.soulapp.android.component.chat.fragment.MsgFragment", classLoader, "D1", boolean.class, new XC_MethodHook() {
+//            @Override
+//            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+//                super.beforeHookedMethod(param);
+//                param.args[0] = false;
+//                XposedBridge.log("111");
+//            }
+//            @Override
+//            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                super.afterHookedMethod(param);
+//            }
+//        });
+
+
+
     }
 }
